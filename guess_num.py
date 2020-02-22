@@ -98,6 +98,7 @@ class GamePlayer:
             #寻问是否还要下一轮：
             ans = input('是否开始新一轮游戏？输入Y继续，输入其它退出')
             if ans != 'Y':
+                print("退出游戏,欢迎下次再来!")
                 break
         return [self.name,self.total_rounds,self.best_times,self.total_times]
 
