@@ -55,40 +55,45 @@ class GamePlayer:
 
     #定义猜数字的程序, 返回一个列表
     def guess_num(self):
-        req = requests.get('https://python666.cn/cls/number/guess/')
-        num = int(req.text)
-        times = 0
-        #排除平均轮数是0的情况
-        if self.total_rounds == 0:
-            avg_times = 0
-        else:
-            avg_times = round(self.total_times/self.total_rounds,2)
-        # print(num, type(num))
-        print(f'{self.name}, 你已经玩了{self.total_rounds}轮游戏，最少{self.best_times}次猜出答案,平均{avg_times}猜出答案，开始游戏！')
-
-        # 开始猜数字的游戏：
-        bingo = False
-        while not bingo:
-            guess = input("请猜一个 1 - 100 的数字：")
-            if not check_guess(guess): #确定玩家输入的是1-100之间的数
-                print("你的输入不符合标准，请重新输入。")
+        while True:
+            req = requests.get('https://python666.cn/cls/number/guess/')
+            num = int(req.text)
+            times = 0
+            #排除平均轮数是0的情况
+            if self.total_rounds == 0:
+                avg_times = 0
             else:
-                times += 1
-                if int(guess) > num:
-                    print("猜大了, 再试试")
-                elif int(guess) < num:
-                    print("猜小了，再试试")
+                avg_times = round(self.total_times/self.total_rounds,2)
+            # print(num, type(num))
+            print(f'{self.name}, 你已经玩了{self.total_rounds}轮游戏，最少{self.best_times}次猜出答案,平均{avg_times}猜出答案，开始游戏！')
+
+            # 开始猜数字的游戏：
+            bingo = False
+            while not bingo:
+                guess = input("请猜一个 1 - 100 的数字：")
+                if not check_guess(guess): #确定玩家输入的是1-100之间的数
+                    print("你的输入不符合标准，请重新输入。")
                 else:
-                    bingo = True
-                    print("恭喜你猜对了！这一轮，你一共猜了 %d 次" % times)
-        #将游戏结果记录,并返回列表
-        self.total_rounds += 1
-        self.total_times += times
-        #确定最少次数
-        if self.best_times == 0:
-            self.best_times = times
-        else:
-            self.best_times = min(self.best_times,times)
+                    times += 1
+                    if int(guess) > num:
+                        print("猜大了, 再试试")
+                    elif int(guess) < num:
+                        print("猜小了，再试试")
+                    else:
+                        bingo = True
+                        print("恭喜你猜对了！这一轮，你一共猜了 %d 次" % times)
+            #将游戏结果记录,并返回列表
+            self.total_rounds += 1
+            self.total_times += times
+            #确定最少次数
+            if self.best_times == 0:
+                self.best_times = times
+            else:
+                self.best_times = min(self.best_times,times)
+            #寻问是否还要下一轮：
+            ans = input('是否开始新一轮游戏？输入Y继续，输入其它退出')
+            if ans != 'Y':
+                break
         return [self.name,self.total_rounds,self.best_times,self.total_times]
 
 
@@ -126,5 +131,8 @@ print(result)
 
 #把结果添加到字典里：
 all_records[user] = result
+
+#询问是否进行下一轮：
+
 print(all_records)
 print(player.name,player.total_rounds,player.best_times,player.total_times)

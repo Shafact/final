@@ -73,21 +73,32 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="312" height="951" key="GridCell.Tab.0.bottom" timestamp="1582411100715">
+    <state width="312" height="951" key="GridCell.Tab.0.bottom" timestamp="1582411729397">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="312" height="951" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1582411100715" />
-    <state width="312" height="951" key="GridCell.Tab.0.center" timestamp="1582411100714">
+    <state width="312" height="951" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1582411729397" />
+    <state width="312" height="951" key="GridCell.Tab.0.center" timestamp="1582411729396">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="312" height="951" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1582411100714" />
-    <state width="312" height="951" key="GridCell.Tab.0.left" timestamp="1582411100714">
+    <state width="312" height="951" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1582411729396" />
+    <state width="312" height="951" key="GridCell.Tab.0.left" timestamp="1582411729395">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="312" height="951" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1582411100714" />
-    <state width="312" height="951" key="GridCell.Tab.0.right" timestamp="1582411100715">
+    <state width="312" height="951" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1582411729395" />
+    <state width="312" height="951" key="GridCell.Tab.0.right" timestamp="1582411729397">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="312" height="951" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1582411100715" />
+    <state width="312" height="951" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1582411729397" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/guess_num.py</url>
+          <line>58</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
