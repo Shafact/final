@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c831ff64-a107-4ba1-b425-e60a93e91db9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_many_users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/game_many_users.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/guess_num.py" beforeDir="false" afterPath="$PROJECT_DIR$/guess_num.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,32 +74,21 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="312" height="951" key="GridCell.Tab.0.bottom" timestamp="1582411729397">
+    <state width="312" height="951" key="GridCell.Tab.0.bottom" timestamp="1582413222894">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="312" height="951" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1582411729397" />
-    <state width="312" height="951" key="GridCell.Tab.0.center" timestamp="1582411729396">
+    <state width="312" height="951" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1582413222894" />
+    <state width="312" height="951" key="GridCell.Tab.0.center" timestamp="1582413222893">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="312" height="951" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1582411729396" />
-    <state width="312" height="951" key="GridCell.Tab.0.left" timestamp="1582411729395">
+    <state width="312" height="951" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1582413222893" />
+    <state width="312" height="951" key="GridCell.Tab.0.left" timestamp="1582413222892">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="312" height="951" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1582411729395" />
-    <state width="312" height="951" key="GridCell.Tab.0.right" timestamp="1582411729397">
+    <state width="312" height="951" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1582413222892" />
+    <state width="312" height="951" key="GridCell.Tab.0.right" timestamp="1582413222893">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="312" height="951" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1582411729397" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/guess_num.py</url>
-          <line>58</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <state width="312" height="951" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1582413222893" />
   </component>
 </project>

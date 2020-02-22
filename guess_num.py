@@ -26,13 +26,15 @@ import requests
 import re
 
 #定义一个函数，读出原始数据
-def read_file(path):
-    with open(path) as f:
+def read_file(pa):
+    with open(pa) as f:
         l = [i.split() for i in f.readlines()]
         for i in range(0, len(l)):
             for j in range(1, len(l[0])):
                 l[i][j] = int(l[i][j])
         return l
+
+
 
 #定义一个函数，将原始数据录入用户数据字典
 def add_original(ls):
@@ -43,6 +45,13 @@ def add_original(ls):
 #定义一个函数检测输入的字符串是否在1-100之间：
 def check_guess(str):
     return re.match(r'\b\d{1,2}\b|100', str)
+
+#定义一个将列表里int转换成string的方法：
+def covStr(ls):
+    for i in range(len(ls)):
+        ls[i] = str(ls[i])
+    ls = ' '.join(ls)
+    return ls
 
 
 #定义一个用户类，含有用户名，用户玩的轮数，最少用了多少次猜中，平均多少次猜中
@@ -106,7 +115,8 @@ print(sharon_result)
 
 
 #读出原始数据
-original_records = read_file('game_many_users.txt')
+path = 'game_many_users.txt'
+original_records = read_file(path)
 print("original_records: ", original_records)
 
 #定义一个dictionary， 储存所有用户数据
@@ -136,3 +146,18 @@ all_records[user] = result
 
 print(all_records)
 print(player.name,player.total_rounds,player.best_times,player.total_times)
+
+#all_records的值，输出为list，并且把list写在原始文件里
+new_records = []
+for i in all_records:
+    new_records.append(all_records[i])
+print(new_records)
+
+#把每个new_records的元素合成一个string
+for i in range(len(new_records)):
+    new_records[i] = covStr(new_records[i])
+print(new_records)
+
+#将new_records写进原来文件里：
+with open(path,'w') as f:
+    f.writelines(i + '\n' for i in new_records)
