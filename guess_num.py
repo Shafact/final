@@ -11,8 +11,6 @@
 如果记录里没有玩家输入的用户名，就新建一条记录，否则在原有记录上更新数据；
 对玩家输入做检测，判定输入的有效性，并保证程序不会因异常输入而出错；
 从网络上获取每一局的答案，请求地址：https://python666.cn/cls/number/guess/
-
-
 """
 
 """ Plans
@@ -20,6 +18,7 @@
 2. 创建一个用户类，包含用户的名字，猜数字的方法，用户玩的轮数，最少用了多少次猜中，平均每轮猜的次数
 3. 每个玩家输入名字后，检测是否已有数据，有就把这些已有数据pass到类上，没有就不用pass按原来的来
 4. 最后将dictionary的值存在列表里，每行一次输出
+5. 寻找可能出现异常的地方，增加try except
 """
 import requests
 
@@ -33,8 +32,6 @@ def read_file(pa):
             for j in range(1, len(l[0])):
                 l[i][j] = int(l[i][j])
         return l
-
-
 
 #定义一个函数，将原始数据录入用户数据字典
 def add_original(ls):
@@ -53,8 +50,7 @@ def covStr(ls):
     ls = ' '.join(ls)
     return ls
 
-
-#定义一个用户类，含有用户名，用户玩的轮数，最少用了多少次猜中，平均多少次猜中
+#定义一个用户类，含有用户名，用户玩的轮数，最少用了多少次猜中，总共猜了多少次
 class GamePlayer:
     def __init__(self, name='', total_rounds=0, best_times=0, total_times=0):
         self.name = name
@@ -105,59 +101,54 @@ class GamePlayer:
                 break
         return [self.name,self.total_rounds,self.best_times,self.total_times]
 
+try:
+    #读出原始数据
+    path = 'game_many_users.txt'
+    original_records = read_file(path)
+    # print("original_records: ", original_records)
 
+    #定义一个dictionary， 储存所有用户数据
+    all_records = {}
 
-"""#test class
-sharon = GamePlayer('Sharon',2,10,11)
-sharon_result = sharon.guess_num()
-print(sharon_result)
-"""
+    #将原始数据加入字典
+    add_original(original_records)
+    # print('all records: ',all_records)
 
+    user = input("Please enter your name: ")
 
-#读出原始数据
-path = 'game_many_users.txt'
-original_records = read_file(path)
-print("original_records: ", original_records)
+    #检测user是否已经有record了, 有则把已有数据pass到类上，没有就保持新类
+    print(user in all_records)
+    if user in all_records:
+        player = GamePlayer(user, all_records[user][1], all_records[user][2], all_records[user][3])
+    else:
+        player = GamePlayer(user)
 
-#定义一个dictionary， 储存所有用户数据
-all_records = {}
+    #开始游戏并获取每一轮结果
+    result = player.guess_num()
+    print(result)
 
-#将原始数据加入字典
-add_original(original_records)
-print('all records: ',all_records)
+    #把结果添加到字典里：
+    all_records[user] = result
 
-user = input("Please enter your name: ")
+    #将all_records的值，输出为list，并且把list写在原始文件里
+    new_records = []
+    for i in all_records:
+        new_records.append(all_records[i])
+    print(new_records)
 
-#检测user是否已经有record了, 有则把已有数据pass到类上，没有就保持新类
-print(user in all_records)
-if user in all_records:
-    player = GamePlayer(user, all_records[user][1], all_records[user][2], all_records[user][3])
+    #把每个new_records的元素合成一个string
+    for i in range(len(new_records)):
+        new_records[i] = covStr(new_records[i])
+    print(new_records)
+
+    #将new_records写进原来文件里：
+    with open(path,'w') as f:
+        f.writelines(i + '\n' for i in new_records)
+except IOError as e_io:
+    print(e_io, "check files and code related to files")
+except Exception as e:
+    print(e)
 else:
-    player = GamePlayer(user)
-
-#开始游戏并获取每一轮结果
-result = player.guess_num()
-print(result)
-
-#把结果添加到字典里：
-all_records[user] = result
-
-#询问是否进行下一轮：
-
-print(all_records)
-print(player.name,player.total_rounds,player.best_times,player.total_times)
-
-#all_records的值，输出为list，并且把list写在原始文件里
-new_records = []
-for i in all_records:
-    new_records.append(all_records[i])
-print(new_records)
-
-#把每个new_records的元素合成一个string
-for i in range(len(new_records)):
-    new_records[i] = covStr(new_records[i])
-print(new_records)
-
-#将new_records写进原来文件里：
-with open(path,'w') as f:
-    f.writelines(i + '\n' for i in new_records)
+    print('Success!')
+finally:
+    print('End')
