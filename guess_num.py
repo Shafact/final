@@ -23,6 +23,8 @@
 """
 import requests
 
+import re
+
 #定义一个函数，读出原始数据
 def read_file(path):
     with open(path) as f:
@@ -39,9 +41,9 @@ def add_original(ls):
 
 #定义一个用户类，含有用户名，用户玩的轮数，最少用了多少次猜中，平均多少次猜中
 class GamePlayer:
-    def __init__(self, name='', total_round=0, best_times=0, total_times=0):
+    def __init__(self, name='', total_rounds=0, best_times=0, total_times=0):
         self.name = name
-        self.total_round = total_round
+        self.total_rounds = total_rounds
         self.best_times = best_times
         self.total_times = total_times
 
@@ -49,10 +51,23 @@ class GamePlayer:
     def guess_num(self):
         req = requests.get('https://python666.cn/cls/number/guess/')
         num = int(req.text)
-        print(num, type(num))
+        times = 0
+        avg_times = round(self.total_times/self.total_rounds,2)
+        # print(num, type(num))
+        print(f'{self.name}, 你已经玩了{self.total_rounds}轮游戏，最少{self.best_times}次猜出答案,平均{avg_times}猜出答案，开始游戏！')
+
+        # 开始猜数字的游戏,并用正则表达式对猜的字符串进行测试：
+        while True:
+            guess = input("请猜一个 1 - 100 的数字：")
+            m = re.match(r'\b\d{2}\b|100', guess)
+            if not m:
+                print("你的输入不符合标准请重新输入.")
+            else:
+                break
+
 
 #test class
-sharon = GamePlayer('Sharon')
+sharon = GamePlayer('Sharon',2,5,11)
 sharon.guess_num()
 
 
@@ -67,15 +82,12 @@ all_records = {}
 add_original(original_records)
 print('all records: ',all_records)
 
-#main process:
-#建立用户类
-
 user = input("Please enter your name: ")
 
 #检测user是否已经有record了, 有则把已有数据pass到类上，没有就保持新类
 print(user in all_records)
 if user in all_records:
-    player = GamePlayer(user,total_round=all_records[user][1], best_times=all_records[user][2], total_times=all_records[user][3])
+    player = GamePlayer(user, all_records[user][1], all_records[user][2], all_records[user][3])
 else:
     player = GamePlayer(user)
-print(player.name,player.total_round,player.best_times,player.total_times)
+print(player.name,player.total_rounds,player.best_times,player.total_times)
