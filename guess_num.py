@@ -39,6 +39,11 @@ def add_original(ls):
     for i in ls:
         all_records[i[0]] = i
 
+#定义一个函数检测输入的字符串是否在1-100之间：
+def check_guess(str):
+    return re.match(r'\b\d{1,2}\b|100', str)
+
+
 #定义一个用户类，含有用户名，用户玩的轮数，最少用了多少次猜中，平均多少次猜中
 class GamePlayer:
     def __init__(self, name='', total_rounds=0, best_times=0, total_times=0):
@@ -56,19 +61,33 @@ class GamePlayer:
         # print(num, type(num))
         print(f'{self.name}, 你已经玩了{self.total_rounds}轮游戏，最少{self.best_times}次猜出答案,平均{avg_times}猜出答案，开始游戏！')
 
-        # 开始猜数字的游戏,并用正则表达式对猜的字符串进行测试：
-        while True:
+        # 开始猜数字的游戏：
+        bingo = False
+        while not bingo:
             guess = input("请猜一个 1 - 100 的数字：")
-            m = re.match(r'\b\d{2}\b|100', guess)
-            if not m:
-                print("你的输入不符合标准请重新输入.")
+            if not check_guess(guess): #确定玩家输入的是1-100之间的数
+                print("你的输入不符合标准，请重新输入。")
             else:
-                break
+                times += 1
+                if int(guess) > num:
+                    print("猜大了, 再试试")
+                elif int(guess) < num:
+                    print("猜小了，再试试")
+                else:
+                    bingo = True
+                    print("恭喜你猜对了！这一轮，你一共猜了 %d 次" % times)
+        #将游戏结果记录
+        self.total_rounds += 1
+        self.total_times += times
+        self.best_times = min(self.best_times,times)
+
+
 
 
 #test class
-sharon = GamePlayer('Sharon',2,5,11)
+sharon = GamePlayer('Sharon',2,10,11)
 sharon.guess_num()
+print(sharon.total_rounds,sharon.best_times,sharon.total_times)
 
 
 #读出原始数据
