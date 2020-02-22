@@ -117,29 +117,29 @@ try:
     user = input("Please enter your name: ")
 
     #检测user是否已经有record了, 有则把已有数据pass到类上，没有就保持新类
-    print(user in all_records)
+    # print(user in all_records)
     if user in all_records:
         player = GamePlayer(user, all_records[user][1], all_records[user][2], all_records[user][3])
     else:
         player = GamePlayer(user)
 
-    #开始游戏并获取每一轮结果
+    #开始游戏并获取结果
     result = player.guess_num()
-    print(result)
+    # print(result)
 
     #把结果添加到字典里：
     all_records[user] = result
 
-    #将all_records的值，输出为list，并且把list写在原始文件里
+    #将all_records的值，输出为新list
     new_records = []
     for i in all_records:
         new_records.append(all_records[i])
-    print(new_records)
+    # print(new_records)
 
     #把每个new_records的元素合成一个string
     for i in range(len(new_records)):
         new_records[i] = covStr(new_records[i])
-    print(new_records)
+    # print(new_records)
 
     #将new_records写进原来文件里：
     with open(path,'w') as f:
