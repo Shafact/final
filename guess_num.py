@@ -29,10 +29,11 @@ import re
 def read_file(path):
     with open(path) as f:
         l = [i.split() for i in f.readlines()]
-        for i in range(1, len(l)):
+        for i in range(0, len(l)):
             for j in range(1, len(l[0])):
                 l[i][j] = int(l[i][j])
         return l
+
 #定义一个函数，将原始数据录入用户数据字典
 def add_original(ls):
     global all_records
@@ -57,7 +58,11 @@ class GamePlayer:
         req = requests.get('https://python666.cn/cls/number/guess/')
         num = int(req.text)
         times = 0
-        avg_times = round(self.total_times/self.total_rounds,2)
+        #排除平均轮数是0的情况
+        if self.total_rounds == 0:
+            avg_times = 0
+        else:
+            avg_times = round(self.total_times/self.total_rounds,2)
         # print(num, type(num))
         print(f'{self.name}, 你已经玩了{self.total_rounds}轮游戏，最少{self.best_times}次猜出答案,平均{avg_times}猜出答案，开始游戏！')
 
@@ -76,18 +81,23 @@ class GamePlayer:
                 else:
                     bingo = True
                     print("恭喜你猜对了！这一轮，你一共猜了 %d 次" % times)
-        #将游戏结果记录
+        #将游戏结果记录,并返回列表
         self.total_rounds += 1
         self.total_times += times
-        self.best_times = min(self.best_times,times)
+        #确定最少次数
+        if self.best_times == 0:
+            self.best_times = times
+        else:
+            self.best_times = min(self.best_times,times)
+        return [self.name,self.total_rounds,self.best_times,self.total_times]
 
 
 
-
-#test class
+"""#test class
 sharon = GamePlayer('Sharon',2,10,11)
-sharon.guess_num()
-print(sharon.total_rounds,sharon.best_times,sharon.total_times)
+sharon_result = sharon.guess_num()
+print(sharon_result)
+"""
 
 
 #读出原始数据
@@ -109,4 +119,12 @@ if user in all_records:
     player = GamePlayer(user, all_records[user][1], all_records[user][2], all_records[user][3])
 else:
     player = GamePlayer(user)
+
+#开始游戏并获取每一轮结果
+result = player.guess_num()
+print(result)
+
+#把结果添加到字典里：
+all_records[user] = result
+print(all_records)
 print(player.name,player.total_rounds,player.best_times,player.total_times)
