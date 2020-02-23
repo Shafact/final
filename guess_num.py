@@ -19,6 +19,9 @@
 3. 每个玩家输入名字后，检测是否已有数据，有就把这些已有数据pass到类上，没有就不用pass按原来的来
 4. 最后将dictionary的值存在列表里，每行一次输出
 5. 寻找可能出现异常的地方，增加try except
+    a. 文件方面有误
+    b. 网页不对
+    c. 其它
 """
 import requests
 
@@ -32,6 +35,8 @@ def read_file(pa):
             for j in range(1, len(l[0])):
                 l[i][j] = int(l[i][j])
         return l
+
+
 
 #定义一个函数，将原始数据录入用户数据字典
 def add_original(ls):
@@ -102,11 +107,20 @@ class GamePlayer:
                 break
         return [self.name,self.total_rounds,self.best_times,self.total_times]
 
+#读出原始数据
+path = 'game_man_users.txt'
+
+#解决file找不到的问题
 try:
-    #读出原始数据
-    path = 'game_many_users.txt'
+    f = open(path)
+    f.close()
+except FileNotFoundError:
+    f = open(path,'w')
+    f.close()
+finally:
     original_records = read_file(path)
     # print("original_records: ", original_records)
+
 
     #定义一个dictionary， 储存所有用户数据
     all_records = {}
@@ -145,11 +159,11 @@ try:
     #将new_records写进原来文件里：
     with open(path,'w') as f:
         f.writelines(i + '\n' for i in new_records)
-except IOError as e_io:
-    print(e_io, "check files and code related to files")
+"""
 except Exception as e:
     print(e)
 else:
     print('Success!')
 finally:
     print('End')
+"""
