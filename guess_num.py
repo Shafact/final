@@ -67,14 +67,14 @@ class GamePlayer:
 
     #定义猜数字的程序, 返回一个列表
     def guess_num(self):
-        # 解决网址不对或没有数字的问题
-        try:
-            req = requests.get('https://python666.cn/cls/number/guess/')
-            num = int(req.text)
-        except:
-            num = random.randint(1,100)
-        finally:
-            while True:
+        while True:
+            # 解决网址不对或没有数字的问题
+            try:
+                req = requests.get('https://python666.cn/cls/number/guess/')
+                num = int(req.text)
+            except:
+                num = random.randint(1, 100)
+            finally:
                 times = 0
                 #排除平均轮数是0的情况
                 if self.total_rounds == 0:
@@ -107,12 +107,12 @@ class GamePlayer:
                     self.best_times = times
                 else:
                     self.best_times = min(self.best_times,times)
-                #寻问是否还要下一轮：
+                #询问是否还要下一轮：
                 ans = input('是否开始新一轮游戏？输入Y继续，输入其它退出')
                 if ans != 'Y':
                     print("退出游戏,欢迎下次再来!")
                     break
-            return [self.name,self.total_rounds,self.best_times,self.total_times]
+        return [self.name,self.total_rounds,self.best_times,self.total_times]
 
 #读出原始数据
 path = 'game_many_users.txt'
