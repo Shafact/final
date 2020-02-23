@@ -27,6 +27,8 @@ import requests
 
 import re
 
+import random
+
 #定义一个函数，读出原始数据
 def read_file(pa):
     with open(pa) as f:
@@ -65,63 +67,69 @@ class GamePlayer:
 
     #定义猜数字的程序, 返回一个列表
     def guess_num(self):
-        while True:
+        # 解决网址不对或没有数字的问题
+        try:
             req = requests.get('https://python666.cn/cls/number/guess/')
             num = int(req.text)
-            times = 0
-            #排除平均轮数是0的情况
-            if self.total_rounds == 0:
-                avg_times = 0
-            else:
-                avg_times = round(self.total_times/self.total_rounds,2)
-            # print(num, type(num))
-            print(f'{self.name}, 你已经玩了{self.total_rounds}轮游戏，最少{self.best_times}次猜出答案,平均{avg_times}猜出答案，开始游戏！')
-
-            # 开始猜数字的游戏：
-            bingo = False
-            while not bingo:
-                guess = input("请猜一个 1 - 100 的数字：")
-                if not check_guess(guess): #确定玩家输入的是1-100之间的数
-                    print("你的输入不符合标准，请重新输入。")
+        except:
+            num = random.randint(1,100)
+        finally:
+            while True:
+                times = 0
+                #排除平均轮数是0的情况
+                if self.total_rounds == 0:
+                    avg_times = 0
                 else:
-                    times += 1
-                    if int(guess) > num:
-                        print("猜大了, 再试试")
-                    elif int(guess) < num:
-                        print("猜小了，再试试")
+                    avg_times = round(self.total_times/self.total_rounds,2)
+                # print(num, type(num))
+                print(f'{self.name}, 你已经玩了{self.total_rounds}轮游戏，最少{self.best_times}次猜出答案,平均{avg_times}猜出答案，开始游戏！')
+
+                # 开始猜数字的游戏：
+                bingo = False
+                while not bingo:
+                    guess = input("请猜一个 1 - 100 的数字：")
+                    if not check_guess(guess): #确定玩家输入的是1-100之间的数
+                        print("你的输入不符合标准，请重新输入。")
                     else:
-                        bingo = True
-                        print("恭喜你猜对了！这一轮，你一共猜了 %d 次" % times)
-            #将游戏结果记录,并返回列表
-            self.total_rounds += 1
-            self.total_times += times
-            #确定最少次数
-            if self.best_times == 0:
-                self.best_times = times
-            else:
-                self.best_times = min(self.best_times,times)
-            #寻问是否还要下一轮：
-            ans = input('是否开始新一轮游戏？输入Y继续，输入其它退出')
-            if ans != 'Y':
-                print("退出游戏,欢迎下次再来!")
-                break
-        return [self.name,self.total_rounds,self.best_times,self.total_times]
+                        times += 1
+                        if int(guess) > num:
+                            print("猜大了, 再试试")
+                        elif int(guess) < num:
+                            print("猜小了，再试试")
+                        else:
+                            bingo = True
+                            print("恭喜你猜对了！这一轮，你一共猜了 %d 次" % times)
+                #将游戏结果记录,并返回列表
+                self.total_rounds += 1
+                self.total_times += times
+                #确定最少次数
+                if self.best_times == 0:
+                    self.best_times = times
+                else:
+                    self.best_times = min(self.best_times,times)
+                #寻问是否还要下一轮：
+                ans = input('是否开始新一轮游戏？输入Y继续，输入其它退出')
+                if ans != 'Y':
+                    print("退出游戏,欢迎下次再来!")
+                    break
+            return [self.name,self.total_rounds,self.best_times,self.total_times]
 
 #读出原始数据
-path = 'game_man_users.txt'
+path = 'game_many_users.txt'
 
 #解决file找不到的问题
 try:
     f = open(path)
     f.close()
-except FileNotFoundError:
+except:
     f = open(path,'w')
     f.close()
 finally:
     original_records = read_file(path)
     # print("original_records: ", original_records)
 
-
+#试试看有其它问题就输出错误停止程序
+try:
     #定义一个dictionary， 储存所有用户数据
     all_records = {}
 
@@ -159,11 +167,9 @@ finally:
     #将new_records写进原来文件里：
     with open(path,'w') as f:
         f.writelines(i + '\n' for i in new_records)
-"""
 except Exception as e:
     print(e)
 else:
     print('Success!')
 finally:
     print('End')
-"""
